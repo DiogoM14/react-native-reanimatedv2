@@ -10,7 +10,7 @@ import Animated, {
 
 import {View, StyleSheet} from 'react-native';
 
-const Interpolate: React.FC = () => {
+const ImageAnimation: React.FC = () => {
   const titlePosition = useSharedValue(30);
 
   useEffect(() => {
@@ -55,4 +55,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Interpolate;
+export default ImageAnimation;

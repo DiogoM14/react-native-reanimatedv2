@@ -6,7 +6,7 @@ import Animated, {
   Easing,
 } from 'react-native-reanimated';
 
-import {View, StyleSheet, StatusBar} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 
 const BasicAnimation: React.FC = () => {
   const titlePosition = useSharedValue(30);
