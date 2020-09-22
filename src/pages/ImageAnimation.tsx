@@ -6,20 +6,36 @@ import Animated, {
   Easing,
   interpolate,
   Extrapolate,
+  sequence,
 } from 'react-native-reanimated';
 
 import {View, StyleSheet} from 'react-native';
 
+import heroImg from '../assets/hero.png';
+
 const ImageAnimation: React.FC = () => {
   const titlePosition = useSharedValue(30);
+  const imagePosition = useSharedValue(-30);
 
   useEffect(() => {
-    setTimeout(() => {
-      titlePosition.value = withTiming(0, {
-        duration: 1000,
-        easing: Easing.bounce,
-      });
-    }, 2000);
+    imagePosition.value = withTiming(
+      0,
+      {
+        duration: 500,
+      },
+      () => {
+        titlePosition.value = sequence(
+          withTiming(0, {
+            duration: 1000,
+            easing: Easing.bounce,
+          }),
+          withTiming(-320, {
+            duration: 500,
+            easing: Easing.bounce,
+          }),
+        );
+      },
+    );
   }, []);
 
   const titleStyle = useAnimatedStyle(() => {
@@ -34,9 +50,18 @@ const ImageAnimation: React.FC = () => {
     };
   });
 
+  const imageStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{translateY: imagePosition.value}],
+    };
+  });
+
   return (
     <View style={styles.container}>
-      <Animated.Text style={[styles.title, titleStyle]}>Olá</Animated.Text>
+      <Animated.Image style={[styles.image, imageStyle]} source={heroImg} />
+      <Animated.Text style={[styles.title, titleStyle]}>
+        Bem-vindo ao APP
+      </Animated.Text>
     </View>
   );
 };
@@ -52,6 +77,11 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: 'bold',
     color: '#dddddd',
+  },
+  image: {
+    width: 288,
+    height: 200,
+    marginBottom: 40,
   },
 });
 
